@@ -7,15 +7,18 @@
  */
 function convertToObject(sourceString) {
   const styleObj = {};
-  const styles = sourceString.replaceAll(/[\r\n\s]+/g, '').split(';');
 
-  for (let i = 0; i < styles.length; i++) {
-    const properties = styles[i].split(':');
+  const styles = sourceString.split(';');
 
-    if (properties[0] !== undefined && properties[1] !== undefined) {
-      styleObj[properties[0]] = properties[1];
+  styles.forEach((style) => {
+    const properties = style.split(':').map((prop) => prop.trim());
+
+    if (properties.length === 2) {
+      const [styleKey, styleValue] = properties;
+
+      styleObj[styleKey] = styleValue;
     }
-  }
+  });
 
   return styleObj;
 }
